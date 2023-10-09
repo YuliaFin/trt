@@ -4,7 +4,7 @@ import axios from 'axios';
 
 @Injectable()
 export class CurrencyService {
-  private readonly apiKey = 'd8abd4451f984415bf558552a779501c'; // Здесь укажите свой API ключ Open Exchange Rates
+  private readonly apiKey = '17bdd6eccfa44586a9ef23c296e5b0de'; // Здесь укажите свой API ключ Open Exchange Rates
 
   async getCurrencyExchangeRate(
     baseCurrency: string,

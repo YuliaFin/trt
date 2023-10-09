@@ -3,7 +3,7 @@ import axios from 'axios';
 
 @Injectable()
 export class GifService {
-  private readonly apiKey = 'uDFmYr9EbIDi727aj7ahIBBXpvWFsF0W'; // Здесь укажите свой API ключ Giphy
+  private readonly apiKey = 'uDFmYr9EbIDi727aj7ahIBBXpvWFsF0W';
 
   async getRandomRichGif(): Promise<string> {
     try {
