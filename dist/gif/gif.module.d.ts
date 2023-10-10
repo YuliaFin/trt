@@ -1,2 +1,2 @@
-export declare class GifModule {
+export declare class GiphyModule {
 }

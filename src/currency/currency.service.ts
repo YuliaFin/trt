@@ -1,27 +1,21 @@
-// currency.service.ts
-import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 
-@Injectable()
-export class CurrencyService {
-  private readonly apiKey = '17bdd6eccfa44586a9ef23c296e5b0de'; // Здесь укажите свой API ключ Open Exchange Rates
+const API_KEY = '4310eb12fabd48c89ee86ab7d202ef07'; // Замени на свой API ключ от Open Exchange Rates
 
-  async getCurrencyExchangeRate(
+export class CurrencyService {
+  async getExchangeRate(
     baseCurrency: string,
     targetCurrency: string,
   ): Promise<number> {
     try {
       const response = await axios.get(
-        'https://open.er-api.com/v6/latest/' + baseCurrency + '/' + this.apiKey,
+        `https://openexchangerates.org/api/latest.json?app_id=${API_KEY}&base=${baseCurrency}`,
       );
-      const exchangeRates = response.data.rates;
-      const rate = exchangeRates[targetCurrency];
-      if (rate) {
-        return rate;
-      } else {
-        throw new Error(`Exchange rate for ${targetCurrency} not found.`);
-      }
+      const rates = response.data.rates;
+      const exchangeRate = rates[targetCurrency];
+      return exchangeRate;
     } catch (error) {
+      console.error('Error fetching exchange rate:', error);
       throw error;
     }
   }

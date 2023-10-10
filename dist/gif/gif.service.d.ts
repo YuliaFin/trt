@@ -1,5 +1,4 @@
-export declare class GifService {
+export declare class GiphyService {
     private readonly apiKey;
-    getRandomRichGif(): Promise<string>;
-    getRandomBrokeGif(): Promise<string>;
+    getRandomGifByTag(tag: string): Promise<string>;
 }

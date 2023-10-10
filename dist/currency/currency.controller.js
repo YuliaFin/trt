@@ -19,22 +19,28 @@ let CurrencyController = class CurrencyController {
     constructor(currencyService) {
         this.currencyService = currencyService;
     }
-    async getCurrencyExchangeRate(baseCurrency, targetCurrency) {
-        const exchangeRate = await this.currencyService.getCurrencyExchangeRate(baseCurrency, targetCurrency);
-        return { exchangeRate };
+    async getExchangeRate(baseCurrency, targetCurrency) {
+        try {
+            const exchangeRate = await this.currencyService.getExchangeRate(baseCurrency, targetCurrency);
+            return { exchangeRate };
+        }
+        catch (error) {
+            console.error('Error fetching exchange rate:', error);
+            return { error: 'Error fetching exchange rate' };
+        }
     }
 };
 exports.CurrencyController = CurrencyController;
 __decorate([
-    (0, common_1.Get)('/:baseCurrency/:targetCurrency'),
-    __param(0, (0, common_1.Param)('baseCurrency')),
-    __param(1, (0, common_1.Param)('targetCurrency')),
+    (0, common_1.Get)('exchange-rate'),
+    __param(0, (0, common_1.Query)('baseCurrency')),
+    __param(1, (0, common_1.Query)('targetCurrency')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
-], CurrencyController.prototype, "getCurrencyExchangeRate", null);
+], CurrencyController.prototype, "getExchangeRate", null);
 exports.CurrencyController = CurrencyController = __decorate([
-    (0, common_1.Controller)('/api/currency'),
+    (0, common_1.Controller)('currency'),
     __metadata("design:paramtypes", [currency_service_1.CurrencyService])
 ], CurrencyController);
 //# sourceMappingURL=currency.controller.js.map

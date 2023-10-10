@@ -6,17 +6,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GifModule = void 0;
+exports.GiphyModule = void 0;
 const common_1 = require("@nestjs/common");
 const gif_controller_1 = require("./gif.controller");
 const gif_service_1 = require("./gif.service");
-let GifModule = class GifModule {
+const currency_service_1 = require("../currency/currency.service");
+let GiphyModule = class GiphyModule {
 };
-exports.GifModule = GifModule;
-exports.GifModule = GifModule = __decorate([
+exports.GiphyModule = GiphyModule;
+exports.GiphyModule = GiphyModule = __decorate([
     (0, common_1.Module)({
-        controllers: [gif_controller_1.GifController],
-        providers: [gif_service_1.GifService],
+        controllers: [gif_controller_1.GiphyController],
+        providers: [gif_service_1.GiphyService, currency_service_1.CurrencyService],
     })
-], GifModule);
+], GiphyModule);
 //# sourceMappingURL=gif.module.js.map

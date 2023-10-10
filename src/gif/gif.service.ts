@@ -1,30 +1,14 @@
-import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 
-@Injectable()
-export class GifService {
+export class GiphyService {
   private readonly apiKey = 'uDFmYr9EbIDi727aj7ahIBBXpvWFsF0W';
 
-  async getRandomRichGif(): Promise<string> {
+  async getRandomGifByTag(tag: string): Promise<string> {
     try {
       const response = await axios.get('https://api.giphy.com/v1/gifs/random', {
         params: {
           api_key: this.apiKey,
-          tag: 'rich',
-        },
-      });
-      return response.data.data.images.original.url;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async getRandomBrokeGif(): Promise<string> {
-    try {
-      const response = await axios.get('https://api.giphy.com/v1/gifs/random', {
-        params: {
-          api_key: this.apiKey,
-          tag: 'broke',
+          tag: tag,
         },
       });
       return response.data.data.images.original.url;

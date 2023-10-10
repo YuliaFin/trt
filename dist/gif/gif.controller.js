@@ -9,37 +9,45 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GifController = void 0;
+exports.GiphyController = void 0;
 const common_1 = require("@nestjs/common");
 const gif_service_1 = require("./gif.service");
-let GifController = class GifController {
-    constructor(gifService) {
-        this.gifService = gifService;
+const currency_service_1 = require("../currency/currency.service");
+let GiphyController = class GiphyController {
+    constructor(giphyService, currencyService) {
+        this.giphyService = giphyService;
+        this.currencyService = currencyService;
     }
-    async getRandomRichGif() {
-        const gifUrl = await this.gifService.getRandomRichGif();
-        return { url: gifUrl };
-    }
-    async getRandomBrokeGif() {
-        const gifUrl = await this.gifService.getRandomBrokeGif();
-        return { url: gifUrl };
+    async getRandomGif() {
+        try {
+            const baseCurrency = 'USD';
+            const targetCurrency = 'CHF';
+            const exchangeRate = await this.currencyService.getExchangeRate(baseCurrency, targetCurrency);
+            let tag;
+            if (exchangeRate > 1) {
+                tag = 'rich';
+            }
+            else {
+                tag = 'broke';
+            }
+            const gifUrl = await this.giphyService.getRandomGifByTag(tag);
+            return { url: gifUrl };
+        }
+        catch (error) {
+            console.error('Error fetching random gif:', error);
+        }
     }
 };
-exports.GifController = GifController;
+exports.GiphyController = GiphyController;
 __decorate([
-    (0, common_1.Get)('random-rich'),
+    (0, common_1.Get)('random-gif'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], GifController.prototype, "getRandomRichGif", null);
-__decorate([
-    (0, common_1.Get)('random-broke'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], GifController.prototype, "getRandomBrokeGif", null);
-exports.GifController = GifController = __decorate([
-    (0, common_1.Controller)('/api/gifs'),
-    __metadata("design:paramtypes", [gif_service_1.GifService])
-], GifController);
+], GiphyController.prototype, "getRandomGif", null);
+exports.GiphyController = GiphyController = __decorate([
+    (0, common_1.Controller)('giphy'),
+    __metadata("design:paramtypes", [gif_service_1.GiphyService,
+        currency_service_1.CurrencyService])
+], GiphyController);
 //# sourceMappingURL=gif.controller.js.map

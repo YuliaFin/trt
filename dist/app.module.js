@@ -20,9 +20,9 @@ let AppModule = class AppModule {
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [gif_module_1.GifModule, currency_module_1.CurrencyModule],
+        imports: [gif_module_1.GiphyModule, currency_module_1.CurrencyModule],
         controllers: [app_controller_1.AppController, currency_controller_1.CurrencyController],
-        providers: [app_service_1.AppService, gif_service_1.GifService, currency_service_1.CurrencyService],
+        providers: [app_service_1.AppService, gif_service_1.GiphyService, currency_service_1.CurrencyService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

@@ -1,19 +1,35 @@
 import { Controller, Get } from '@nestjs/common';
-import { GifService } from './gif.service';
+import { GiphyService } from './gif.service';
+import { CurrencyService } from '../currency/currency.service';
 
-@Controller('/api/gifs')
-export class GifController {
-  constructor(private readonly gifService: GifService) {}
+@Controller('giphy')
+export class GiphyController {
+  constructor(
+    private readonly giphyService: GiphyService,
+    private readonly currencyService: CurrencyService,
+  ) {}
 
-  @Get('random-rich')
-  async getRandomRichGif(): Promise<{ url: string }> {
-    const gifUrl = await this.gifService.getRandomRichGif();
-    return { url: gifUrl };
-  }
+  @Get('random-gif')
+  async getRandomGif(): Promise<{ url: string }> {
+    try {
+      const baseCurrency = 'USD';
+      const targetCurrency = 'CHF'; // Замените YOUR_TARGET_CURRENCY на вашу целевую валюту
+      const exchangeRate = await this.currencyService.getExchangeRate(
+        baseCurrency,
+        targetCurrency,
+      );
 
-  @Get('random-broke')
-  async getRandomBrokeGif(): Promise<{ url: string }> {
-    const gifUrl = await this.gifService.getRandomBrokeGif();
-    return { url: gifUrl };
+      let tag: string;
+      if (exchangeRate > 1) {
+        tag = 'rich';
+      } else {
+        tag = 'broke';
+      }
+
+      const gifUrl = await this.giphyService.getRandomGifByTag(tag);
+      return { url: gifUrl };
+    } catch (error) {
+      console.error('Error fetching random gif:', error);
+    }
   }
 }
