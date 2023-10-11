@@ -1,3 +1,3 @@
 export declare class CurrencyService {
-    getExchangeRate(baseCurrency: string, targetCurrency: string): Promise<number>;
+    getExchangeRate(baseCurrency: string, targetCurrency: string, date: Date): Promise<number>;
 }

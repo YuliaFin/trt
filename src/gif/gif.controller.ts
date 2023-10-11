@@ -1,3 +1,4 @@
+// giphy.controller.ts
 import { Controller, Get } from '@nestjs/common';
 import { GiphyService } from './gif.service';
 import { CurrencyService } from '../currency/currency.service';
@@ -13,14 +14,24 @@ export class GiphyController {
   async getRandomGif(): Promise<{ url: string }> {
     try {
       const baseCurrency = 'USD';
-      const targetCurrency = 'CHF'; // Замените YOUR_TARGET_CURRENCY на вашу целевую валюту
-      const exchangeRate = await this.currencyService.getExchangeRate(
+      const targetCurrency = 'CHF';
+      const today = new Date();
+      const yesterday = new Date(today);
+      yesterday.setDate(today.getDate() - 1);
+
+      const todayExchangeRate = await this.currencyService.getExchangeRate(
         baseCurrency,
         targetCurrency,
+        today,
+      );
+      const yesterdayExchangeRate = await this.currencyService.getExchangeRate(
+        baseCurrency,
+        targetCurrency,
+        yesterday,
       );
 
       let tag: string;
-      if (exchangeRate > 1) {
+      if (todayExchangeRate > yesterdayExchangeRate) {
         tag = 'rich';
       } else {
         tag = 'broke';

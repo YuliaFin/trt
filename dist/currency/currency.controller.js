@@ -19,9 +19,9 @@ let CurrencyController = class CurrencyController {
     constructor(currencyService) {
         this.currencyService = currencyService;
     }
-    async getExchangeRate(baseCurrency, targetCurrency) {
+    async getExchangeRate(baseCurrency, targetCurrency, date) {
         try {
-            const exchangeRate = await this.currencyService.getExchangeRate(baseCurrency, targetCurrency);
+            const exchangeRate = await this.currencyService.getExchangeRate(baseCurrency, targetCurrency, date);
             return { exchangeRate };
         }
         catch (error) {
@@ -35,8 +35,9 @@ __decorate([
     (0, common_1.Get)('exchange-rate'),
     __param(0, (0, common_1.Query)('baseCurrency')),
     __param(1, (0, common_1.Query)('targetCurrency')),
+    __param(2, (0, common_1.Query)('date')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:paramtypes", [String, String, Date]),
     __metadata("design:returntype", Promise)
 ], CurrencyController.prototype, "getExchangeRate", null);
 exports.CurrencyController = CurrencyController = __decorate([

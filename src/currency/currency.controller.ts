@@ -1,3 +1,4 @@
+// currency.controller.ts
 import { Controller, Get, Query } from '@nestjs/common';
 import { CurrencyService } from './currency.service';
 
@@ -9,11 +10,13 @@ export class CurrencyController {
   async getExchangeRate(
     @Query('baseCurrency') baseCurrency: string,
     @Query('targetCurrency') targetCurrency: string,
+    @Query('date') date: Date, // Добавляем параметр даты
   ) {
     try {
       const exchangeRate = await this.currencyService.getExchangeRate(
         baseCurrency,
         targetCurrency,
+        date,
       );
       return { exchangeRate };
     } catch (error) {

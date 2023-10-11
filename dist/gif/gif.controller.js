@@ -22,9 +22,13 @@ let GiphyController = class GiphyController {
         try {
             const baseCurrency = 'USD';
             const targetCurrency = 'CHF';
-            const exchangeRate = await this.currencyService.getExchangeRate(baseCurrency, targetCurrency);
+            const today = new Date();
+            const yesterday = new Date(today);
+            yesterday.setDate(today.getDate() - 1);
+            const todayExchangeRate = await this.currencyService.getExchangeRate(baseCurrency, targetCurrency, today);
+            const yesterdayExchangeRate = await this.currencyService.getExchangeRate(baseCurrency, targetCurrency, yesterday);
             let tag;
-            if (exchangeRate > 1) {
+            if (todayExchangeRate > yesterdayExchangeRate) {
                 tag = 'rich';
             }
             else {
